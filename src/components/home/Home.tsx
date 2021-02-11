@@ -48,7 +48,6 @@ const articlesUrl = baseUrl + "books";
 	
     return (
         <main>
-            
             <SearchBooks handleSearch={filterBooks} />
             {loading ? <p>Loading books</p> : ""}
             {error ? <ErrorMessage><span>Error&#58;</span>{error}</ErrorMessage> : ""}
