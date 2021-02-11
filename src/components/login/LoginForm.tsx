@@ -1,5 +1,5 @@
-import React, { useState, useEffect} from 'react'; 
-import { useHistory } from 'react-router-dom';
+import React, { useState} from 'react'; 
+//import { useHistory } from 'react-router-dom';
 
 //Components
 import {doLogin} from '../services/utilities';
@@ -12,18 +12,19 @@ const LoginForm: React.FC = () =>  {
   const [message, setMessage] = useState(false);
 
   
-  const history = useHistory();
+  //const history = useHistory();
 
   //Wait one second before redirect to the home page
-  useEffect(() => {
-    if(message) {
-        setTimeout(()=> {
-            setMessage(false);
-            history.push("/");
+  // useEffect(() => {
+    // if(message) {
+    //     setTimeout(()=> {
+    //         setMessage(false);
+    //         history.push("/");
         
-        }, 1000)
-    }
-  }, [message, history]);
+    //     }, 1000)
+    // }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
     
 
