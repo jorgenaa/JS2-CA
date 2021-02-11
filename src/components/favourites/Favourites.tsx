@@ -42,7 +42,7 @@ const Favourites: React.FC = () => {
                                 <td className="home__td">{author}</td>
                                 <td className="home__td">{description}</td>
                                 <td className="home__td"> 
-                                    <FaHeart className={"home__favourite home__favourite--selected"} />   
+                                    <FaHeart className={"home__favourite-btn home__favourite-btn--selected"} />   
                                 </td>
                                
                             </tr>

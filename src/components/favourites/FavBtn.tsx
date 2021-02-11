@@ -23,7 +23,7 @@ const FavBtn: React.FC<Props> = ({id, title, genre, description, author}) => {
             return fav.id === id;
         })
         if(doesObjectExist) {
-            cssClass= "home__favourite home__favourite--selected"
+            cssClass= "home__favourite-btn home__favourite-btn--selected"
         }
     }
     checkDoexObekctExist();
