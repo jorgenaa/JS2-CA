@@ -1,0 +1,47 @@
+.admin {
+    background-color: $blue;
+    height: 100%;
+    padding: 0 16px;
+    text-align: center;
+    width: 100%;
+   
+    &__title {
+        font-family: $robotoRegular;
+        font-size: 16pt;
+        font-weight: 200;
+        color: $white;
+        border-bottom: solid 1px $white;
+        width: 100%;
+        padding-top: 16px;
+    }
+
+    &__nav {
+        display: flex;
+        flex-direction: column;
+         @include screen("mobile") {
+            flex-direction: row;
+            justify-content: center;
+        }
+    }
+    
+     &__link {
+        line-height: 80px;
+        text-decoration: none;
+        font-family: $latoRegular;
+        color: $white;
+        text-align: center;
+        @include screen("mobile") {
+            padding: 8px;
+             line-height: 40px;
+        }
+        &--hover {
+            &:hover {
+                color: $carminePink;
+            }
+        }
+        &--active {
+            color: $carminePink;
+        }
+    }
+  
+}

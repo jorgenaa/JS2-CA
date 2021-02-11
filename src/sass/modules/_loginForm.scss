@@ -1,0 +1,61 @@
+.form {
+	display: flex;
+	flex-direction: column;
+	max-width: 600px;
+	margin: 16px auto;
+	&__element {
+	margin: 10px 0;
+	width: 100%;
+	
+}
+	&__label {
+		vertical-align: top;
+		width: 20%;
+		display: inline-block;
+		padding: 10px 5px;
+		font-family: $latoBold;
+}
+	&__input {
+		width: 80%;
+		padding: 10px 5px;
+	}
+	&__btn {
+		font-family: $latoBold;
+		font-family: $latoBold;
+		color: $white;
+		border: none;
+		width: 20%;
+		padding: 10px 5px;
+		cursor: pointer;
+		&--submit {
+			background-color: $green;
+		}
+		&--delete {
+			background-color: $red;
+		}
+	}
+	&__error {
+		color: $red;
+		margin-left: 20%;
+		margin-top: 5px;
+	}
+	&__message {
+		color: $white;
+		padding: 10px;
+		&--success {
+			background-color: $green;
+
+		}
+		&--error{
+			background-color: $red;
+		}
+	}
+
+	&__description {
+		width: 80%;
+		min-height: 150px; 
+		padding: 10px 5px;
+		font-size: 16px;
+	}
+	
+}

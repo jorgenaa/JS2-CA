@@ -1,0 +1,92 @@
+.router {
+    background-color: $blue;
+    height: 80px;
+    
+    &__hamburger {
+        color: $white;
+        font-size: 22px;
+        float: right;
+        margin-right: 16px;
+        margin-top: 25px;
+        display: none;
+        @include screen("mobile") {
+            display: block;
+        }
+    }
+    &__close {
+        color: $white;
+        font-size: 22px;
+        float: right;
+        margin-right: 16px;
+        margin-top: 25px;
+        display: none;
+    }
+    &__input {
+        display: none;
+    }
+    &__nav {
+       text-align: center;
+        @include screen("mobile") {
+            display: none;
+            position: fixed;
+            top: 80px;
+            left: -100%;
+            background: $blueOpacity;
+            height: 100vh;
+            width: 100%;
+            display: block;
+            transition: all 0.4s ease;
+        }
+       
+    }
+     &__link {
+        line-height: 80px;
+        text-decoration: none;
+        font-family: $latoRegular;
+        color: $white;
+        padding: 0 8px;
+        //transition: all 0.3s ease;
+        @include screen("mobile"){
+            width: 100%;
+            //margin-left: -100%;
+            display: block;
+            transition: 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            text-align: center;
+        }
+        &--hover {
+            &:hover {
+                color: $carminePink;
+            }
+        }
+        &--active {
+            color: $carminePink;
+        }
+    }
+    &__logout {
+        font-size: 22px;
+        color: $white;
+        padding: 0 8px;
+        cursor: pointer;
+        &--hover {
+            &:hover {
+                color: $carminePink;
+            }
+        }
+    }
+ }
+ 
+ #hamburger-menu:checked ~ .router__nav {
+     display: block;
+     left: 0;
+ }
+
+//  #hamburger-menu:checked ~ .router__link{
+//     margin-left: 0px;
+//   }
+
+
+  #hamburger-menu:checked ~ .router__hamburger:before {
+     content: "\f00d";
+  
+  }
+  

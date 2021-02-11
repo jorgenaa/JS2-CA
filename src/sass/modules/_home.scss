@@ -1,0 +1,84 @@
+.home {
+    display: flex;
+    max-width: 1200px;
+    height: auto;
+    justify-content: center;
+    margin: 0 auto;
+     @include screen("mobile") {
+        display: block;
+        width: 100%;
+     
+        }
+    &__sidebar {
+        flex: 1;
+        box-shadow: 0px 3px 16px $lightGrey;
+        margin-right: 16px;
+        @include screen("mobile") {
+            margin-right: 0px;
+            display: flex;
+            margin-bottom: 16px;
+        }
+    }
+    &__bookList {
+        flex: 6;
+        width: 100%;
+        overflow-x: auto;
+       
+    }
+    &__table {
+        border-collapse: collapse;
+        margin: 0 auto;
+        border: 1px solid $blue;
+    }
+    &__th{
+        padding: 16px;
+        background-color: $blue;
+        color: $white;
+        width: 20%;
+          &:nth-child(2){
+            width: 10%;
+           
+          }
+          &:nth-child(4) {
+            width: 50%; 
+          } 
+    }
+    &__td {
+        padding: 8px;
+        border: 1px solid $blue;
+       
+        &:nth-child(5) {
+             text-align: center;
+        }
+        &:nth-child(6) {
+            text-align: center;
+       }
+    }
+   
+
+    &__favourite-btn {
+        font-size: 26px;
+        cursor: pointer;
+        color: $lightGrey;
+    
+        &--selected {
+            color: $carminePink;
+        }
+        &--unselected {
+            color: $lightGrey;
+        }
+    } 
+    &__edit-btn {
+        background-color: $white;
+        border: solid 1px;
+        padding: 2px;
+    }
+
+    &__edit-icon {
+        font-size: 26px;
+        cursor: pointer;
+        color: $lightGrey;
+        
+    }
+}
+

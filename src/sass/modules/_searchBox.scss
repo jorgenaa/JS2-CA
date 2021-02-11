@@ -1,0 +1,24 @@
+.search-box {
+    margin: 16px 0 32px;
+    height: 60px;
+    text-align: center;
+    line-height: 60px;
+    background-color: $safronYellow;
+&__input {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid $lightGrey;
+    &--active {
+        &:focus:not([readonly]) {
+            outline: none;
+            border-color: carminePink;
+            box-shadow: 0 0 1px 2px $carminePink;
+
+        }
+      
+    }
+}
+&__icon {
+    margin-left: 8px;
+}
+}
