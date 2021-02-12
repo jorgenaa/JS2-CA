@@ -1,10 +1,12 @@
 import {useEffect, useState} from 'react';
+import { useHistory } from 'react-router-dom';
 import {
 	Switch,
     Route,
 	NavLink
 } from 'react-router-dom';
 import { GiHamburgerMenu } from 'react-icons/gi';
+import { BiLogOut } from 'react-icons/bi';
 
 //Components
 import Home from '../home/Home';
@@ -12,18 +14,34 @@ import Favourites from '../favourites/Favourites';
 import LoginForm from '../login/LoginForm';
 import AddBooks from '../home/admin/AddBooks';
 import EditBooks from '../home/admin/EditBooks'
-import { getUsername} from '../services/storage';
+import { getUsername, clearStorage} from '../services/storage';
+
 
  const Layout: React.FC = () => {
     const [authLink, setAuthLink] = useState(<NavLink className="router__link router__link--hover" activeClassName="router__link--active" to="/Login/">Login</NavLink>);
+    const [logout, setLogout] = useState(<span></span>);
     const username = getUsername();
-   
+    const history = useHistory();
 
+    const handleLogoutBtn = () => {
+       
+        //const doLogout = confirm("Are you sure");
+        if(username ) {
+            // eslint-disable-next-line no-restricted-globals
+            confirm("Are you sure");
+            clearStorage();
+            history.push('/')
+            setLogout(<span></span>)
+        }
+    }
+      
     useEffect(() => {
         if(username) {
-            setAuthLink(<span className="router__link">Hi {username}</span>);
+            setAuthLink(<span className="router__link">Hi {username}</span> );
+            setLogout(<span className="router__logout router__logout--hover"><BiLogOut onClick={handleLogoutBtn} /></span>);
         }
-    }, [username, authLink]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
    
     return (
         <>
@@ -38,6 +56,7 @@ import { getUsername} from '../services/storage';
                     Favourites
                 </NavLink>
                 {authLink}
+                {logout}
             </nav>
         </div>
         <Switch>
@@ -52,4 +71,4 @@ import { getUsername} from '../services/storage';
     )
 }
 
-export default Layout
+export default Layout;
