@@ -1,3 +1,8 @@
+#Strapi application
+
+username: jorgen.arnes@gmail.com
+password: Password2021
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
