@@ -1,5 +1,5 @@
-import React, { useState} from 'react'; 
-//import { useHistory } from 'react-router-dom';
+import React, { useState, useEffect} from 'react'; 
+import { useHistory } from 'react-router-dom';
 
 //Components
 import {doLogin} from '../services/utilities';
@@ -12,19 +12,19 @@ const LoginForm: React.FC = () =>  {
   const [message, setMessage] = useState(false);
 
   
-  //const history = useHistory();
+  const history = useHistory();
 
   //Wait one second before redirect to the home page
-  // useEffect(() => {
-    // if(message) {
-    //     setTimeout(()=> {
-    //         setMessage(false);
-    //         history.push("/");
+  useEffect(() => {
+    if(message) {
+        setTimeout(()=> {
+            setMessage(false);
+            history.push("/");
         
-    //     }, 1000)
-    // }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
+        }, 1000)
+    }
+ 
+  }, [history, message]);
 
     
 
@@ -32,8 +32,8 @@ const LoginForm: React.FC = () =>  {
     //let errorMessage = "Invalid login details";
     
 
-   const onSubmit = (e: any) => {
-     e.preventDefault();
+   const onSubmit = async (e: any) => {
+      e.preventDefault();
    
       doLogin(usernameValue, passwordValue)
         .then((json: any) => {
@@ -43,7 +43,7 @@ const LoginForm: React.FC = () =>  {
             setMessage(true);
             saveToken(json.jwt);
             saveUser(json.user);
-            
+          
           }else if(json.error){
             setMessage(false);
           }
