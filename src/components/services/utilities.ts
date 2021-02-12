@@ -10,7 +10,7 @@ export const getBookList = () => {
 }
 
 //POST request for loggin
-export const doLogin = (username: string, password: any) => {
+export const doLogin = async (username: string, password: any) => {
     const url = baseUrl + "auth/local";
     const data = ({identifier: username, password: password});
 
@@ -25,7 +25,7 @@ export const doLogin = (username: string, password: any) => {
 }
 
 //POST request for adding books
-export const setBook = (title: string, genre: string, author: string, description: string) => {
+export const setBook = async (title: string, genre: string, author: string, description: string) => {
    
     const data = JSON.stringify({title: title, genre: genre, author: author, description: description });
 
@@ -43,7 +43,7 @@ export const setBook = (title: string, genre: string, author: string, descriptio
    
    
 //PUT request for update a book
-export const editBook = (id: any, title: string, genre: string, author: string, description: string) => {
+export const editBook =  async(id: any, title: string, genre: string, author: string, description: string) => {
  
   const data = JSON.stringify({title: title, genre: genre, author: author, description: description });
 
@@ -60,7 +60,7 @@ export const editBook = (id: any, title: string, genre: string, author: string, 
 
 
 //Delete requesat for deleting books
-export const deleteBook = (id: any) => {
+export const deleteBook = async (id: any) => {
 
   return fetch(booksUrl + id, {
     method: 'DELETE',
