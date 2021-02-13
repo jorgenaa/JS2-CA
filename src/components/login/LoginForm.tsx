@@ -11,7 +11,6 @@ const LoginForm: React.FC = () =>  {
   const [passwordValue, setPasswordValue] = useState("");
   const [message, setMessage] = useState(false);
 
-  
   const history = useHistory();
 
   //Wait one second before redirect to the home page
@@ -26,12 +25,9 @@ const LoginForm: React.FC = () =>  {
  
   }, [history, message]);
 
-    
-
     let successMessage = "Successfully logged in";
     //let errorMessage = "Invalid login details";
     
-
    const onSubmit = async (e: any) => {
       e.preventDefault();
    
@@ -47,6 +43,9 @@ const LoginForm: React.FC = () =>  {
           }else if(json.error){
             setMessage(false);
           }
+      })
+      .catch((error: any) => {
+        console.log(error)
       })
    } 
 

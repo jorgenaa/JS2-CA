@@ -1,5 +1,4 @@
 import FavBtn from '../favourites/FavBtn';
-//import { NavLink} from 'react-router-dom';
 import { MdEdit } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
 

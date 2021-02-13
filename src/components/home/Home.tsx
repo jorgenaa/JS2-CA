@@ -3,7 +3,7 @@ import {baseUrl} from '../constants/api';
 
 //Components
 import SearchBooks from './SearchBooks';
-import TableRowHeadings from './TableHeading';
+import TableHeading from './TableHeading';
 import BookList from './BookList';
 import Sidebar from '../home/Sidebar'
 import ErrorMessage from '../common/ErrorMessage';
@@ -55,7 +55,7 @@ const articlesUrl = baseUrl + "books";
                 <Sidebar />
                 <section className="home__bookList">
                     <table className="home__table">
-                        <TableRowHeadings />
+                        <TableHeading />
                         <BookList filteredBooks={filteredBooks} />  
                     </table>
                 </section>

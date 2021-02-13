@@ -52,9 +52,6 @@ const AddBooks: React.FC<Props> = ({successMessage, errorMessage}) =>  {
         }
       }, [message]);
 
-    
-
-
 	const submitForm = () => {
       
         setBook(titleValue, genreValue, authorValue, descriptionValue)
@@ -108,7 +105,7 @@ const AddBooks: React.FC<Props> = ({successMessage, errorMessage}) =>  {
 
                     <div className="form__element">
                         <label className="form__label"></label>
-                        <button className="form__btn-submit" type="submit">Add</button>
+                        <button className="form__btn form__btn--submit" type="submit">Add</button>
                     </div>
                 </form>
             </main>

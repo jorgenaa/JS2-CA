@@ -3,6 +3,7 @@ import {baseUrl} from '../constants/api';
 const booksUrl = baseUrl + "books/";
 const token = getToken();
 
+
 // Retrieve resources
 export const getBookList = () => {
     return fetch(booksUrl)
@@ -43,7 +44,7 @@ export const setBook = async (title: string, genre: string, author: string, desc
    
    
 //PUT request for update a book
-export const editBook =  async(id: any, title: string, genre: string, author: string, description: string) => {
+export const editBook = async(id: any, title: string, genre: string, author: string, description: string) => {
  
   const data = JSON.stringify({title: title, genre: genre, author: author, description: description });
 
@@ -69,5 +70,5 @@ export const deleteBook = async (id: any) => {
       Authorization: `Bearer ${token}`
     },
   })
-    .then(data => data.json())
-}
+     .then(data => data.json())
+ }

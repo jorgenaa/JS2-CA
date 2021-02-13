@@ -23,7 +23,7 @@
         flex: 6;
         width: 100%;
         overflow-x: auto;
-       
+        font-family: $robotoRegular;
     }
     &__table {
         border-collapse: collapse;
@@ -31,6 +31,7 @@
         border: 1px solid $blue;
     }
     &__th{
+        font-family: $robotoBold;
         padding: 16px;
         background-color: $blue;
         color: $white;

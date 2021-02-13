@@ -17,7 +17,7 @@ import EditBooks from '../home/admin/EditBooks'
 import { getUsername, clearStorage} from '../services/storage';
 
 
- const Layout: React.FC = () => {
+const Layout: React.FC = () => {
     const [authLink, setAuthLink] = useState(<NavLink className="router__link router__link--hover" activeClassName="router__link--active" to="/Login/">Login</NavLink>);
     const username = getUsername();
     const history = useHistory();
