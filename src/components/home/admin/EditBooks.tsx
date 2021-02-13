@@ -3,9 +3,10 @@ import { useParams, useHistory } from 'react-router-dom';
 import {useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import ErrorMessage from '../../common/ErrorMessage';
 
 //Components
+import Message from '../../common/Message';
+import ErrorMessage from '../../common/ErrorMessage';
 import {editBook, deleteBook} from '../../services/utilities';
 import {baseUrl} from '../../constants/api';
 const booksUrl = baseUrl + "books/";
@@ -20,16 +21,15 @@ const schema = yup.object().shape({
 interface Props {
 	successMessage: string,
     errorMessage: string,
-	successDelete: string,
 }
 
-const EditBooks: React.FC<Props> = ({successMessage, errorMessage, successDelete}) => {
+const EditBooks: React.FC<Props> = ({successMessage, errorMessage}) => {
 	const [titleValue, setTitleValue] = useState("");
     const [genreValue, setGenreValue] = useState("");
     const [authorValue, setAuthorValue] = useState("");
     const [descriptionValue, setDescriptionValue] = useState("");
     const [message, setMessage] = useState(false);
-
+	const [errorMsg, setErrorMsg] = useState(false);
 	const {id}: any = useParams();
 	const history = useHistory();
 
@@ -66,13 +66,15 @@ const EditBooks: React.FC<Props> = ({successMessage, errorMessage, successDelete
 
 			if(json.updated_at) {
 				setMessage(true);
-			
+				
 			}else if(json.error) {
 				setMessage(false);
+				setErrorMsg(true);
 			}
 		})
 		.catch((error: any) => {
 			console.log(error)
+			
 		})
 	};
 
@@ -102,8 +104,8 @@ const EditBooks: React.FC<Props> = ({successMessage, errorMessage, successDelete
 			<form className="form" > 
 				
 				<div className="form__element">
-				 	{message && <p className="form__message form__message--success">{successMessage}</p>}
-				{/* {message === false ? <p className="form__message form__message--error">{errorMessage}</p> : ""} */}
+				 	{message && <Message>{successMessage}</Message>}
+				    {errorMsg && <ErrorMessage>{errorMessage}</ErrorMessage>} 
 				</div>
 
 				<div className="form__element">

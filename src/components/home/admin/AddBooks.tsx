@@ -5,8 +5,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useHistory } from 'react-router-dom';
 
 //Components
-import {getToken} from '../../services/storage';
 import ErrorMessage from '../../common/ErrorMessage';
+import Message from '../../common/Message';
+import {getToken} from '../../services/storage';
 import {setBook} from '../../services/utilities';
 
 const schema = yup.object().shape({
@@ -29,6 +30,7 @@ const AddBooks: React.FC<Props> = ({successMessage, errorMessage}) =>  {
     const [authorValue, setAuthorValue] = useState("");
     const [descriptionValue, setDescriptionValue] = useState("");
     const [message, setMessage] = useState(false);
+    const [errorMsg, setErrorMsg] = useState(false);
     const history = useHistory();
    
     const token = getToken();
@@ -65,7 +67,11 @@ const AddBooks: React.FC<Props> = ({successMessage, errorMessage}) =>  {
                 setDescriptionValue("");
             }else if(json.error) {
                 setMessage(false);
+                setErrorMsg(true);
             }
+        })
+        .catch((error: any) => {
+            console.log(error)
         })
      }
      successMessage = "Book is successfully added";
@@ -77,7 +83,8 @@ const AddBooks: React.FC<Props> = ({successMessage, errorMessage}) =>  {
                 <form className="form" onClick={handleSubmit(submitForm)}> 
                     
                     <div className="form__element">
-                       {message && <p className="form__message form__message--success">{successMessage}</p>}
+                       {message && <Message>{successMessage}</Message>}
+                       {errorMsg && <ErrorMessage>{errorMessage}</ErrorMessage>} 
                     </div>
                     <div className="form__element">
                         <label className="form__label">Title&#58;</label>    

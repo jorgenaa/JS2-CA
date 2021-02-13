@@ -1,17 +1,37 @@
 import React, { useState, useEffect} from 'react'; 
 import { useHistory } from 'react-router-dom';
+import {useForm } from 'react-hook-form';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 //Components
+import Message from '../common/Message';
+import ErrorMessage from '../common/ErrorMessage';
 import {doLogin} from '../services/utilities';
 import { saveToken, saveUser } from '../services/storage';
 
+const schema = yup.object().shape({
+    username: yup.string().required("Username is required"),
+    password: yup.string().required("Password is required")
+    .min(4, "Password must be at least 4 characters long")
+    .max(30, "Password must be less than 30")
+ });
 
-const LoginForm: React.FC = () =>  { 
+interface Props  {
+  successMessage: string,
+  errorMessage: string
+}
+
+const LoginForm: React.FC<Props> = ({successMessage, errorMessage}) =>  { 
   const [usernameValue, setUsernameValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
   const [message, setMessage] = useState(false);
-
+  const [errorMsg, setErrorMsg] = useState(false);
   const history = useHistory();
+
+  const { register, handleSubmit, errors } = useForm({ 
+    resolver: yupResolver(schema),
+  });
 
   //Wait one second before redirect to the home page
   useEffect(() => {
@@ -25,8 +45,8 @@ const LoginForm: React.FC = () =>  {
  
   }, [history, message]);
 
-    let successMessage = "Successfully logged in";
-    //let errorMessage = "Invalid login details";
+    successMessage = "Successfully logged in";
+    errorMessage = "Invalid login details";
     
    const onSubmit = async (e: any) => {
       e.preventDefault();
@@ -42,6 +62,7 @@ const LoginForm: React.FC = () =>  {
           
           }else if(json.error){
             setMessage(false);
+            setErrorMsg(true);
           }
       })
       .catch((error: any) => {
@@ -50,19 +71,21 @@ const LoginForm: React.FC = () =>  {
    } 
 
     return (
-            <form className="form" onClick={onSubmit}> 
+            <form className="form" onClick={handleSubmit(onSubmit)}> 
                   <div className="form__element">
-                    {message && <p className="form__message form__message--success">{successMessage}</p>}
-                    {/* {!message && <p className="form__message form__message--error">{errorMessage}</p>} */}
+                    {message && <Message>{successMessage}</Message>}
+                    {errorMsg && <ErrorMessage>{errorMessage}</ErrorMessage>} 
                   </div>
                 <div className="form__element">
                     <label className="form__label">Username&#58;</label>    
-                    <input className="form__input" onChange={event => setUsernameValue(event.target.value)} value={usernameValue} name="username" placeholder="Enter your username" />
+                    <input className="form__input" onChange={event => setUsernameValue(event.target.value)} value={usernameValue} name="username" placeholder="Enter your username" ref={register} />
+                    {errors.username && <ErrorMessage>{errors.username.message}</ErrorMessage>}  
                 </div>
               
                 <div className="form__element">
                     <label className="form__label">Password&#58;</label>
-                    <input className="form__input" onChange={event => setPasswordValue(event.target.value)} value={passwordValue} name="password" placeholder="Enter a password of min 4 characters" />
+                    <input className="form__input" onChange={event => setPasswordValue(event.target.value)} value={passwordValue} name="password" placeholder="Enter a password of min 4 characters" ref={register} />
+                    {errors.password && <ErrorMessage>{errors.password.message}</ErrorMessage>}
                 </div>
 
                 <div className="form__element">

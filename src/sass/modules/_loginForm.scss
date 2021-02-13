@@ -42,6 +42,8 @@
 	&__message {
 		color: $white;
 		padding: 10px;
+		width: 80%;
+		float: right;
 		&--success {
 			background-color: $green;
 
