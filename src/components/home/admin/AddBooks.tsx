@@ -18,13 +18,7 @@ const schema = yup.object().shape({
  });
 
 
- interface Props {
-    successMessage: string;
-    errorMessage: string;
-    errorMessage2: string;
- }
-
-const AddBooks: React.FC<Props> = ({successMessage, errorMessage}) =>  { 
+const AddBooks: React.FC = () =>  { 
     const [titleValue, setTitleValue] = useState("");
     const [genreValue, setGenreValue] = useState("");
     const [authorValue, setAuthorValue] = useState("");
@@ -75,8 +69,6 @@ const AddBooks: React.FC<Props> = ({successMessage, errorMessage}) =>  {
             console.log(error)
         })
      }
-     successMessage = "Book is successfully added";
-     errorMessage = "An error occured";
      
     return (
             <main>
@@ -84,8 +76,8 @@ const AddBooks: React.FC<Props> = ({successMessage, errorMessage}) =>  {
                 <form className="form" onClick={handleSubmit(submitForm)}> 
                     
                     <div className="form__element">
-                       {message && <Message>{successMessage}</Message>}
-                       {errorMsg && <ErrorMessage>{errorMessage}</ErrorMessage>} 
+                       {message && <Message>Book is successfully added</Message>}
+                       {errorMsg && <ErrorMessage>An error occured</ErrorMessage>} 
                     </div>
                     <div className="form__element">
                         <label className="form__label">Title&#58;</label>    

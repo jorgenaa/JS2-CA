@@ -20,12 +20,8 @@ const schema = yup.object().shape({
 	    description: yup.string().required("Description is required")
 	 });
 
-interface Props {
-	successMessage: string,
-    errorMessage: string,
-}
 
-const EditBooks: React.FC<Props> = ({successMessage, errorMessage}) => {
+const EditBooks: React.FC = () => {
 	const [titleValue, setTitleValue] = useState("");
     const [genreValue, setGenreValue] = useState("");
     const [authorValue, setAuthorValue] = useState("");
@@ -107,8 +103,6 @@ const EditBooks: React.FC<Props> = ({successMessage, errorMessage}) => {
 		history.push('/')
 	}
 
-	successMessage = "Book is successfully updated";
-	errorMessage = "An error occured";
 
 	return ( 
 		<main>
@@ -116,8 +110,8 @@ const EditBooks: React.FC<Props> = ({successMessage, errorMessage}) => {
 			<form className="form"> 
 				
 				<div className="form__element">
-				 	{message && <Message>{successMessage}</Message>}
-				    {errorMsg && <ErrorMessage>{errorMessage}</ErrorMessage>} 
+				 	{message && <Message>Book is successfully updated</Message>}
+				    {errorMsg && <ErrorMessage>An error occured</ErrorMessage>} 
 				</div>
 
 				<div className="form__element">

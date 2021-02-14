@@ -17,12 +17,8 @@ const schema = yup.object().shape({
     .max(30, "Password must be less than 30")
  });
 
-interface Props  {
-  successMessage: string,
-  errorMessage: string
-}
 
-const LoginForm: React.FC<Props> = ({successMessage, errorMessage}) =>  { 
+const LoginForm: React.FC = () =>  { 
   const [usernameValue, setUsernameValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
   const [message, setMessage] = useState(false);
@@ -45,8 +41,6 @@ const LoginForm: React.FC<Props> = ({successMessage, errorMessage}) =>  {
  
   }, [history, message]);
 
-    successMessage = "Successfully logged in";
-    errorMessage = "Invalid login details";
     
    const onSubmit = async () => {
   
@@ -73,8 +67,8 @@ const LoginForm: React.FC<Props> = ({successMessage, errorMessage}) =>  {
   return (
           <form className="form" onClick={handleSubmit(onSubmit)}> 
                 <div className="form__element">
-                  {message && <Message>{successMessage}</Message>}
-                  {errorMsg && <ErrorMessage>{errorMessage}</ErrorMessage>} 
+                  {message && <Message>Successfully logged in</Message>}
+                  {errorMsg && <ErrorMessage>Invalid login details</ErrorMessage>} 
                 </div>
               <div className="form__element">
                   <label className="form__label">Username&#58;</label>    
