@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'; 
-import { useParams, useHistory } from 'react-router-dom'; 
+import { useParams } from 'react-router-dom'; 
 import {useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -8,6 +8,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import Message from '../../common/Message';
 import ErrorMessage from '../../common/ErrorMessage';
 import { deleteBook} from '../../services/utilities'; //editBook
+import DeleteButton from './DeleteButton';
 import { getToken } from '../../services/storage';
 import {baseUrl} from '../../constants/api';
 const booksUrl = baseUrl + "books/";
@@ -29,7 +30,6 @@ const EditBooks: React.FC = () => {
     const [message, setMessage] = useState(false);
 	const [errorMsg, setErrorMsg] = useState(false);
 	const {id}: any = useParams();
-	const history = useHistory();
 
 	const { register, handleSubmit, errors } = useForm({ 
 			  resolver: yupResolver(schema),
@@ -88,22 +88,6 @@ const EditBooks: React.FC = () => {
 		})
 	};
 
-
-	const deleteBtn = () => {
-		//eslint-disable-next-line no-restricted-globals
-		let doDelete = confirm("Are you sure you want to delete the book");
-		console.log(doDelete);
-		if(doDelete){ 
-			deleteBook(id)
-			
-			.catch((error: any) => {
-				console.log(error);
-			})
-		}
-		history.push('/')
-	}
-
-
 	return ( 
 		<main>
 			<h1 className="title">Edit Books</h1>
@@ -149,7 +133,8 @@ const EditBooks: React.FC = () => {
 
 				<div className="form__element">
 					<label className="form__label"></label>
-					<button className="form__btn form__btn--delete" onClick={deleteBtn}>Delete</button> 
+					{/* <button className="form__btn form__btn--delete" onClick={deleteBtn}>Delete</button>  */}
+					<DeleteButton id={id} deleteBook={deleteBook} />
 				</div>
 			</form> 
 			 
