@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'; 
-import { useParams } from 'react-router-dom'; 
+import { useParams, useHistory } from 'react-router-dom'; 
 import {useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -30,7 +30,8 @@ const EditBooks: React.FC = () => {
     const [message, setMessage] = useState(false);
 	const [errorMsg, setErrorMsg] = useState(false);
 	const {id}: any = useParams();
-
+	const history = useHistory();
+	
 	const { register, handleSubmit, errors } = useForm({ 
 			  resolver: yupResolver(schema),
 		  });
@@ -47,15 +48,6 @@ const EditBooks: React.FC = () => {
 		})
 		 // eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
-
-	useEffect(() => {
-		if(message) {
-			setTimeout(()=> {
-				setMessage(false);
-			}, 1000)
-		}
-			 // eslint-disable-next-line react-hooks/exhaustive-deps
-		}, []);
 		
 		const editBook = async( title: string, genre: string, author: string, description: string) => {
  
@@ -81,6 +73,14 @@ const EditBooks: React.FC = () => {
 				setErrorMsg(false);
 			}
 		})
+		  //Wait one second before redirect to the home page
+      .then(() => {
+         setTimeout(()=> {
+            setMessage(false);
+            history.push("/");
+        
+        }, 1000)
+      })
 		.catch((error: any) => {
 			console.log(error)
 			setMessage(false);

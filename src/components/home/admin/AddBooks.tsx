@@ -2,12 +2,10 @@ import { useState, useEffect} from 'react';
 import {useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useHistory } from 'react-router-dom';
 
 //Components
 import ErrorMessage from '../../common/ErrorMessage';
 import Message from '../../common/Message';
-import {getToken} from '../../services/storage';
 import {setBook} from '../../services/utilities';
 
 const schema = yup.object().shape({
@@ -25,16 +23,6 @@ const AddBooks: React.FC = () =>  {
     const [descriptionValue, setDescriptionValue] = useState("");
     const [message, setMessage] = useState(false);
     const [errorMsg, setErrorMsg] = useState(false);
-    const history = useHistory();
-   
-    const token = getToken();
-    
-    useEffect(() => {
-        if(!token) {
-        history.push("/");
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
 
     const { register, handleSubmit, errors } = useForm({ 
@@ -68,6 +56,7 @@ const AddBooks: React.FC = () =>  {
         })
         .catch((error: any) => {
             console.log(error)
+            setErrorMsg(true);
         })
      }
      

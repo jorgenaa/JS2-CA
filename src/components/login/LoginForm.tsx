@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react'; 
+import React, { useState} from 'react'; 
 import { useHistory } from 'react-router-dom';
 import {useForm } from 'react-hook-form';
 import * as yup from 'yup';
@@ -29,20 +29,7 @@ const LoginForm: React.FC = () =>  {
     resolver: yupResolver(schema),
   });
 
-  //Wait one second before redirect to the home page
-  useEffect(() => {
-    if(message) {
-        setTimeout(()=> {
-            setMessage(false);
-            history.push("/");
-        
-        }, 1000)
-    }
- 
-  }, [history, message]);
-
-    
-   const onSubmit = async () => {
+  const onSubmit = async () => {
   
       doLogin(usernameValue, passwordValue)
         .then((json: any) => {
@@ -53,11 +40,21 @@ const LoginForm: React.FC = () =>  {
             setErrorMsg(false);
             saveToken(json.jwt);
             saveUser(json.user);
-          
+             if(message) {
+         
+    }
           }else if(json.error){
             setMessage(false);
             setErrorMsg(true);
           }
+      })
+      //Wait one second before redirect to the home page
+      .then(() => {
+         setTimeout(()=> {
+            setMessage(false);
+            history.push("/");
+        
+        }, 1000)
       })
       .catch((error: any) => {
         console.log(error)
