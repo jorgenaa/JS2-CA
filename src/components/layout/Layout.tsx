@@ -27,7 +27,6 @@ const Layout: React.FC = () => {
         if(doLogout) {
             clearStorage();
             history.push('/');
-            
         }
     }
 

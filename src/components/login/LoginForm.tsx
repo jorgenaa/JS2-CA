@@ -17,7 +17,6 @@ const schema = yup.object().shape({
     .max(30, "Password must be less than 30")
  });
 
-
 const LoginForm: React.FC = () =>  { 
   const [usernameValue, setUsernameValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
@@ -40,9 +39,6 @@ const LoginForm: React.FC = () =>  {
             setErrorMsg(false);
             saveToken(json.jwt);
             saveUser(json.user);
-             if(message) {
-         
-    }
           }else if(json.error){
             setMessage(false);
             setErrorMsg(true);
@@ -72,13 +68,11 @@ const LoginForm: React.FC = () =>  {
                   <input className="form__input" onChange={event => setUsernameValue(event.target.value)} value={usernameValue.trim()} name="username" placeholder="Enter your username" ref={register} />
                   {errors.username && <ErrorMessage>{errors.username.message}</ErrorMessage>}  
               </div>
-            
               <div className="form__element">
                   <label className="form__label">Password&#58;</label>
                   <input className="form__input" onChange={event => setPasswordValue(event.target.value)} value={passwordValue.trim()} name="password" placeholder="Enter a password of min 4 characters" ref={register} />
                   {errors.password && <ErrorMessage>{errors.password.message}</ErrorMessage>}
               </div>
-
               <div className="form__element">
                   <label className="form__label"></label>
                   <button className="form__btn form__btn--submit" type="submit">Submit</button>
