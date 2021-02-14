@@ -33,7 +33,8 @@ const AddBooks: React.FC = () =>  {
         if(!token) {
         history.push("/");
         }
-    }, [history, token]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
 
     const { register, handleSubmit, errors } = useForm({ 
@@ -55,7 +56,7 @@ const AddBooks: React.FC = () =>  {
           
             if(json.created_at) {
                 setMessage(true);
-                 setErrorMsg(false);
+                setErrorMsg(false);
                 setTitleValue("");
                 setGenreValue("");
                 setAuthorValue("");
