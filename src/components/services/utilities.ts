@@ -41,24 +41,6 @@ export const setBook = async (title: string, genre: string, author: string, desc
       .then(data => data.json())
    }
 
-   
-   
-//PUT request for update a book
-export const editBook = async(id: any, title: string, genre: string, author: string, description: string) => {
- 
-  const data = JSON.stringify({title: title, genre: genre, author: author, description: description });
-
-  return fetch(booksUrl + id, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`
-    },
-    body: data
-  })
-    .then(data => data.json())
- }
-
 
 //Delete requesat for deleting books
 export const deleteBook = async (id: any) => {

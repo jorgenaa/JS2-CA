@@ -25,7 +25,7 @@
         display: none;
     }
     &__nav {
-       text-align: center;
+        text-align: center;
         @include screen("mobile") {
             display: none;
             position: fixed;

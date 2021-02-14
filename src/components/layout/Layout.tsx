@@ -13,9 +13,8 @@ import Home from '../home/Home';
 import Favourites from '../favourites/Favourites';
 import LoginForm from '../login/LoginForm';
 import AddBooks from '../home/admin/AddBooks';
-import EditBooks from '../home/admin/EditBooks'
+import EditBooks from '../home/admin/EditBooks';
 import { getUsername, clearStorage} from '../services/storage';
-
 
 const Layout: React.FC = () => {
     const [authLink, setAuthLink] = useState(<NavLink className="router__link router__link--hover" activeClassName="router__link--active" to="/Login/">Login</NavLink>);

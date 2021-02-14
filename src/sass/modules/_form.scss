@@ -18,6 +18,7 @@
 	&__input {
 		width: 80%;
 		padding: 10px 5px;
+		margin-bottom: 6px;
 	}
 	&__btn {
 		font-family: $latoBold;
@@ -42,8 +43,9 @@
 	&__message {
 		color: $white;
 		padding: 10px;
-		width: 80%;
-		float: right;
+		display: inline-block;
+		border-radius: 5px;
+		margin-left: 20%;
 		&--success {
 			background-color: $green;
 
@@ -57,7 +59,7 @@
 		width: 80%;
 		min-height: 150px; 
 		padding: 10px 5px;
-		font-size: 16px;
+		font-size: 15px;
 	}
 	
 }

@@ -61,6 +61,7 @@ const AddBooks: React.FC<Props> = ({successMessage, errorMessage}) =>  {
           
             if(json.created_at) {
                 setMessage(true);
+                 setErrorMsg(false);
                 setTitleValue("");
                 setGenreValue("");
                 setAuthorValue("");
