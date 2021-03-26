@@ -13,8 +13,8 @@ const articlesUrl = baseUrl + "books";
  const Home: React.FC = () => {
     const [books, setBooks] = useState([]);
     const [filteredBooks, setFilteredBooks] = useState([]);
-    const [error, setError] = useState(false);
-    const [loading, setLoading] = useState(false);
+    const [serverError, setServerError] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         fetch(articlesUrl)
@@ -27,7 +27,7 @@ const articlesUrl = baseUrl + "books";
         })
         .catch((error:any) => {
             console.log(error)
-            setError(error);
+            setServerError(error);
            
         })
     }, []);
@@ -50,7 +50,7 @@ const articlesUrl = baseUrl + "books";
         <main>
             <SearchBooks handleSearch={filterBooks} />
             {loading ? <p>Loading books</p> : ""}
-            {error ? <ErrorMessage><span>Error&#58;</span>{error}</ErrorMessage> : ""}
+            {serverError ? <ErrorMessage><span>Error&#58;</span>{serverError}</ErrorMessage> : ""}
             <div className="home">
                 <Sidebar />
                 <section className="home__bookList">

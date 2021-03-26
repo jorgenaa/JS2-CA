@@ -1,4 +1,5 @@
-import { useHistory } from 'react-router-dom'; 
+
+import { useHistory } from 'react-router-dom';
 
     interface Props {
         id: any,
@@ -6,15 +7,15 @@ import { useHistory } from 'react-router-dom';
     }
 
     const DeleteButton:React.FC<Props> = ({id, deleteBook}) => {
+      
         const history = useHistory();
 
         const deleteBtn = () => {
 		//eslint-disable-next-line no-restricted-globals
             let doDelete = confirm("Are you sure you want to delete the book");
-            console.log(doDelete);
+           
             if(doDelete){ 
                 deleteBook(id)
-                
                 .catch((error: any) => {
                     console.log(error);
                 })

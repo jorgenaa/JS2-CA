@@ -7,7 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 //Components
 import Message from '../../common/Message';
 import ErrorMessage from '../../common/ErrorMessage';
-import { deleteBook} from '../../services/utilities'; //editBook
+import { deleteBook} from '../../services/utilities';
 import DeleteButton from './DeleteButton';
 import { getToken } from '../../services/storage';
 import {baseUrl} from '../../constants/api';
@@ -29,6 +29,7 @@ const EditBooks: React.FC = () => {
     const [descriptionValue, setDescriptionValue] = useState("");
     const [message, setMessage] = useState(false);
 	const [errorMsg, setErrorMsg] = useState(false);
+	const [currentId, setCurrentId] = useState("")
 	const {id}: any = useParams();
 	const history = useHistory();
 
@@ -44,8 +45,9 @@ const EditBooks: React.FC = () => {
 			setGenreValue(json.genre);
 			setAuthorValue(json.author);
 			setDescriptionValue(json.description);
-			deleteBook(json.id);
+			setCurrentId(json.id)
 		})
+	
 		 // eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 		
@@ -66,11 +68,9 @@ const EditBooks: React.FC = () => {
 
 	const submitForm = () => {
 		editBook(titleValue, genreValue, authorValue, descriptionValue)
-		.then((json: any)=> {
-			if(json.updated_at) {
+		.then(()=> {
 				setMessage(true);
 				setErrorMsg(false);
-			}
 		})
 		//Wait one second before redirect to the home page
       .then(() => {
@@ -85,11 +85,12 @@ const EditBooks: React.FC = () => {
 			setErrorMsg(true);
 		})
 	};
+ 	
 
 	return ( 
 		<main>
 			<h1 className="title">Edit Books</h1>
-			<form className="form"> 
+			<form className="form" onSubmit={handleSubmit(submitForm)}> 
 				<div className="form__element">
 				 	{message && <Message>Book is successfully updated</Message>}
 				    {errorMsg && <ErrorMessage>An error occured</ErrorMessage>} 
@@ -119,11 +120,12 @@ const EditBooks: React.FC = () => {
 				</div> 
 				<div className="form__element">
 					<label className="form__label"></label>
-					<button className="form__btn form__btn--submit" onClick={handleSubmit(submitForm)}>Update</button>
+					<button className="form__btn form__btn--submit" >Update</button>
 				</div>
 				<div className="form__element">
 					<label className="form__label"></label>
-					<DeleteButton id={id} deleteBook={deleteBook} />
+					 <DeleteButton id={currentId} deleteBook={deleteBook} /> 
+					
 				</div>
 			</form> 	 
 		</main>

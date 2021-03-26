@@ -27,9 +27,10 @@ const LoginForm: React.FC = () =>  {
   const { register, handleSubmit, errors } = useForm({ 
     resolver: yupResolver(schema),
   });
-
-  const onSubmit = async () => {
+ 
   
+  const onSubmit = async () => {
+      
       doLogin(usernameValue, passwordValue)
         .then((json: any) => {
           if(json.user) {
@@ -46,37 +47,41 @@ const LoginForm: React.FC = () =>  {
       })
       //Wait one second before redirect to the home page
       .then(() => {
-         setTimeout(()=> {
+            setTimeout(()=> {
             setMessage(false);
             history.push("/");
-        
         }, 1000)
       })
       .catch((error: any) => {
         console.log(error)
       })
+      .finally(()=>  {
+        setMessage(false);
+      })
    } 
 
   return (
-          <form className="form" onClick={handleSubmit(onSubmit)}> 
+          <form className="form" onSubmit={handleSubmit(onSubmit)}> 
+              <fieldset disabled={message}>
                 <div className="form__element">
                   {message && <Message>Successfully logged in</Message>}
                   {errorMsg && <ErrorMessage>Invalid login details</ErrorMessage>} 
                 </div>
-              <div className="form__element">
-                  <label className="form__label">Username&#58;</label>    
-                  <input className="form__input" onChange={event => setUsernameValue(event.target.value)} value={usernameValue.trim()} name="username" placeholder="Enter your username" ref={register} />
-                  {errors.username && <ErrorMessage>{errors.username.message}</ErrorMessage>}  
-              </div>
-              <div className="form__element">
-                  <label className="form__label">Password&#58;</label>
-                  <input className="form__input" onChange={event => setPasswordValue(event.target.value)} value={passwordValue.trim()} name="password" placeholder="Enter a password of min 4 characters" ref={register} />
-                  {errors.password && <ErrorMessage>{errors.password.message}</ErrorMessage>}
-              </div>
-              <div className="form__element">
-                  <label className="form__label"></label>
-                  <button className="form__btn form__btn--submit" type="submit">Submit</button>
-              </div>
+                <div className="form__element">
+                    <label className="form__label">Username&#58;</label>    
+                    <input className="form__input" onChange={event => setUsernameValue(event.target.value)} value={usernameValue.trim()} name="username" placeholder="Enter your username" ref={register} />
+                    {errors.username && <ErrorMessage>{errors.username.message}</ErrorMessage>}  
+                </div>
+                <div className="form__element">
+                    <label className="form__label">Password&#58;</label>
+                    <input className="form__input" onChange={event => setPasswordValue(event.target.value)} value={passwordValue.trim()} name="password" placeholder="Enter a password of min 4 characters" ref={register} />
+                    {errors.password && <ErrorMessage>{errors.password.message}</ErrorMessage>}
+                </div>
+                <div className="form__element">
+                    <label className="form__label"></label>
+                    <button className="form__btn form__btn--submit" type="submit">Submit</button>
+                </div>
+              </fieldset>
           </form>
         );
     }

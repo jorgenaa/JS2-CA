@@ -52,5 +52,5 @@ export const deleteBook = async (id: any) => {
       Authorization: `Bearer ${token}`
     },
   })
-     .then(data => data.json())
+    .then(data => data.json())
  }

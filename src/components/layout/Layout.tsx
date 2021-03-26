@@ -15,8 +15,10 @@ import LoginForm from '../login/LoginForm';
 import AddBooks from '../home/admin/AddBooks';
 import EditBooks from '../home/admin/EditBooks';
 import { getUsername, clearStorage} from '../services/storage';
+//import AuthContext from "../common/AuthContext";
 
 const Layout: React.FC = () => {
+    //const [auth, setAuth] = useContext(AuthContext);
     const [authLink, setAuthLink] = useState(<NavLink className="router__link router__link--hover" activeClassName="router__link--active" to="/Login/">Login</NavLink>);
     const username = getUsername();
     const history = useHistory();

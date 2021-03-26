@@ -38,17 +38,12 @@ const AddBooks: React.FC = () =>  {
 	const submitForm = () => {
         setBook(titleValue, genreValue, authorValue, descriptionValue)
         .then((json: any)=> {
-            if(json.created_at) {
-                setMessage(true);
-                setErrorMsg(false);
-                setTitleValue("");
-                setGenreValue("");
-                setAuthorValue("");
-                setDescriptionValue("");
-            }else if(json.error) {
-                setMessage(false);
-                setErrorMsg(true);
-            }
+            setMessage(true);
+            setErrorMsg(false);
+            setTitleValue("");
+            setGenreValue("");
+            setAuthorValue("");
+            setDescriptionValue("");
         })
         .catch((error: any) => {
             console.log(error)
@@ -59,7 +54,7 @@ const AddBooks: React.FC = () =>  {
     return (
             <main>
                 <h1 className="title">Add Books</h1>
-                <form className="form" onClick={handleSubmit(submitForm)}> 
+                <form className="form" onSubmit={handleSubmit(submitForm)}> 
                     <div className="form__element">
                        {message && <Message>Book is successfully added</Message>}
                        {errorMsg && <ErrorMessage>An error occured</ErrorMessage>} 
