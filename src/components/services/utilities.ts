@@ -3,7 +3,6 @@ import {baseUrl} from '../constants/api';
 const booksUrl = baseUrl + "books/";
 const token = getToken();
 
-
 // Retrieve resources
 export const getBookList = () => {
     return fetch(booksUrl)

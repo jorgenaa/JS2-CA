@@ -1,4 +1,4 @@
-import { useState, useEffect} from 'react'; 
+import { useState } from 'react'; 
 import {useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -27,14 +27,6 @@ const AddBooks: React.FC = () =>  {
         resolver: yupResolver(schema),
     });
 
-    useEffect(() => {
-        if(message) {
-            setTimeout(()=> {
-              setMessage(false);
-            }, 1000)
-        }
-      }, [message]);
-
 	const submitForm = () => {
         setBook(titleValue, genreValue, authorValue, descriptionValue)
         .then((json: any)=> {
@@ -44,6 +36,11 @@ const AddBooks: React.FC = () =>  {
             setGenreValue("");
             setAuthorValue("");
             setDescriptionValue("");
+        })
+        .then(()=> {
+            setTimeout(()=> {
+                setMessage(false);
+              }, 1500)
         })
         .catch((error: any) => {
             console.log(error)

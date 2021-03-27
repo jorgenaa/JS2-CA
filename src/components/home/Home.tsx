@@ -8,6 +8,7 @@ import BookList from './BookList';
 import ErrorMessage from '../common/ErrorMessage';
 const articlesUrl = baseUrl + "books"; 
 
+
  const Home: React.FC = () => {
     const [books, setBooks] = useState([]);
     const [filteredBooks, setFilteredBooks] = useState([]);
@@ -47,7 +48,7 @@ const articlesUrl = baseUrl + "books";
     return (
         <main>
             <SearchBooks handleSearch={filterBooks} />
-            {loading ? <p>Loading books</p> : ""}
+            {loading ? <p className="home--loading">Loading books...</p> : ""}
             {serverError ? <ErrorMessage><span>Error&#58;</span>{serverError}</ErrorMessage> : ""}
             <div className="home">
                 <section className="home__bookList">

@@ -9,6 +9,7 @@ import Message from '../common/Message';
 import ErrorMessage from '../common/ErrorMessage';
 import AuthContext from "../common/AuthContext";
 import {baseUrl} from '../constants/api';
+import {saveToken} from '../services/storage';
 
 const schema = yup.object().shape({
     username: yup.string().required("Username is required"),
@@ -49,6 +50,8 @@ const LoginForm= () =>  {
           setMessage(true);
           setErrorMsg(false);
           setAuth(json.jwt);
+          saveToken(json.jwt)
+          
         }
       })
       //Wait one second before redirect to the home page
