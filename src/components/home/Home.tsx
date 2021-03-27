@@ -5,9 +5,7 @@ import {baseUrl} from '../constants/api';
 import SearchBooks from './SearchBooks';
 import TableHeading from './TableHeading';
 import BookList from './BookList';
-import Sidebar from '../home/Sidebar'
 import ErrorMessage from '../common/ErrorMessage';
-
 const articlesUrl = baseUrl + "books"; 
 
  const Home: React.FC = () => {
@@ -52,7 +50,6 @@ const articlesUrl = baseUrl + "books";
             {loading ? <p>Loading books</p> : ""}
             {serverError ? <ErrorMessage><span>Error&#58;</span>{serverError}</ErrorMessage> : ""}
             <div className="home">
-                <Sidebar />
                 <section className="home__bookList">
                     <table className="home__table">
                         <TableHeading />

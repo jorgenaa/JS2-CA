@@ -1,4 +1,4 @@
-import { useEffect, useState} from 'react'; 
+import { useContext} from 'react'; 
 import { useHistory } from 'react-router-dom';
 import {
 	Switch,
@@ -14,30 +14,23 @@ import Favourites from '../favourites/Favourites';
 import LoginForm from '../login/LoginForm';
 import AddBooks from '../home/admin/AddBooks';
 import EditBooks from '../home/admin/EditBooks';
-import { getUsername, clearStorage} from '../services/storage';
-//import AuthContext from "../common/AuthContext";
+import { clearStorage } from '../services/storage';
+import AuthContext from "../common/AuthContext";
 
-const Layout: React.FC = () => {
-    //const [auth, setAuth] = useContext(AuthContext);
-    const [authLink, setAuthLink] = useState(<NavLink className="router__link router__link--hover" activeClassName="router__link--active" to="/Login/">Login</NavLink>);
-    const username = getUsername();
+const Layout = () => {
+    const [auth, setAuth] = useContext(AuthContext);
+   
     const history = useHistory();
     
     const handleLogoutBtn = () => {
         //eslint-disable-next-line no-restricted-globals
         let doLogout = confirm("Are you sure");
         if(doLogout) {
+            setAuth(null);
             clearStorage();
             history.push('/');
         }
     }
-
-    useEffect(() => {
-        if(username) {
-            setAuthLink(<span className="router__logout router__logout--hover"><BiLogOut onClick={handleLogoutBtn} /></span>);
-        }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
    
     return (
         <>
@@ -51,7 +44,17 @@ const Layout: React.FC = () => {
                 <NavLink className="router__link router__link--hover" activeClassName="router__link--active" to="/favourites/">
                     Favourites
                 </NavLink>
-                {authLink}
+                {auth ? (
+                    <>
+                        <NavLink className="router__link router__link--hover" activeClassName="router__link--active" to="/addBooks/">
+                          Add Books
+                        </NavLink>
+                        <span className="router__logout router__logout--hover"><BiLogOut onClick={handleLogoutBtn} /></span>
+                    </>  
+                    
+                ) :(
+                    <NavLink className="router__link router__link--hover" activeClassName="router__link--active" to="/Login/">Login</NavLink>
+                )}
             </nav>
         </div>
         <Switch>
