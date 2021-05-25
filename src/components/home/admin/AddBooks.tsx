@@ -16,26 +16,19 @@ const schema = yup.object().shape({
  });
 
 const AddBooks: React.FC = () =>  { 
-    const [titleValue, setTitleValue] = useState("");
-    const [genreValue, setGenreValue] = useState("");
-    const [authorValue, setAuthorValue] = useState("");
-    const [descriptionValue, setDescriptionValue] = useState("");
     const [message, setMessage] = useState(false);
     const [errorMsg, setErrorMsg] = useState(false);
 
-    const { register, handleSubmit, errors } = useForm({ 
+    const { register, handleSubmit, errors, reset } = useForm({ 
         resolver: yupResolver(schema),
     });
 
-	const submitForm = () => {
-        setBook(titleValue, genreValue, authorValue, descriptionValue)
-        .then((json: any)=> {
+	const submitForm = (data: any) => {
+        setBook(data.title, data.genre, data.author, data.description)
+        .then(()=> {
             setMessage(true);
             setErrorMsg(false);
-            setTitleValue("");
-            setGenreValue("");
-            setAuthorValue("");
-            setDescriptionValue("");
+           
         })
         .then(()=> {
             setTimeout(()=> {
@@ -46,6 +39,10 @@ const AddBooks: React.FC = () =>  {
             console.log(error)
             setErrorMsg(true);
         })
+        .finally(() => {
+            reset()
+        })
+       
      }
      
     return (
@@ -58,22 +55,22 @@ const AddBooks: React.FC = () =>  {
                     </div>
                     <div className="form__element">
                         <label className="form__label">Title&#58;</label>    
-                        <input className="form__input" onChange={event => setTitleValue(event.target.value)} value={titleValue} name="title" ref={register} />
+                        <input className="form__input" name="title" ref={register} />
                         {errors.title && <ErrorMessage>{errors.title.message}</ErrorMessage>}   
                     </div>
                     <div className="form__element">
                         <label className="form__label">Genre&#58;</label>
-                        <input className="form__input" onChange={event => setGenreValue(event.target.value)} value={genreValue} name="genre" ref={register} />
+                        <input className="form__input" name="genre" ref={register} />
                         {errors.genre && <ErrorMessage>{errors.genre.message}</ErrorMessage>}   
                     </div>
                     <div className="form__element">
                         <label className="form__label">Author&#58;</label>
-                        <input className="form__input" onChange={event => setAuthorValue(event.target.value)} value={authorValue} name="author" ref={register} />
+                        <input className="form__input" name="author" ref={register} />
                         {errors.author && <ErrorMessage>{errors.author.message}</ErrorMessage>}   
                     </div>
                     <div className="form__element">
                         <label className="form__label">Description&#58;</label>
-                        <textarea className="form__description" onChange={event => setDescriptionValue(event.target.value)} value={descriptionValue} name="description" ref={register} />
+                        <textarea className="form__description" name="description" ref={register} />
                         {errors.description && <ErrorMessage>{errors.description.message}</ErrorMessage>}   
                     </div>
                     <div className="form__element">

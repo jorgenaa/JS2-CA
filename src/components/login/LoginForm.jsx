@@ -9,7 +9,6 @@ import Message from '../common/Message';
 import ErrorMessage from '../common/ErrorMessage';
 import AuthContext from "../common/AuthContext";
 import {baseUrl} from '../constants/api';
-import {saveToken} from '../services/storage';
 
 const schema = yup.object().shape({
     username: yup.string().required("Username is required"),
@@ -19,8 +18,6 @@ const schema = yup.object().shape({
  });
 
 const LoginForm= () =>  { 
-  const [usernameValue, setUsernameValue] = useState("");
-  const [passwordValue, setPasswordValue] = useState("");
   const [message, setMessage] = useState(false);
   const [errorMsg, setErrorMsg] = useState(false);
   const history = useHistory();
@@ -29,12 +26,13 @@ const LoginForm= () =>  {
     resolver: yupResolver(schema),
   });
 
-  const [auth, setAuth] = useContext(AuthContext);
-  console.log(auth);
+  const [, setAuth] = useContext(AuthContext);
+  
   const url = baseUrl + "auth/local";
-  const data = ({identifier: usernameValue, password: passwordValue});
+  
 
-  const onSubmit = async () => {
+  const onSubmit = async (data) => {
+      data = { identifier: data.username, password: data.password };
       fetch(url, {
         method: "POST",
         body: JSON.stringify(data), 
@@ -44,15 +42,9 @@ const LoginForm= () =>  {
       })
       .then(data => data.json())
       .then((json) => {
-        if(json.user.username === usernameValue) {
-          setUsernameValue("");
-          setPasswordValue("");
           setMessage(true);
           setErrorMsg(false);
           setAuth(json.jwt);
-          saveToken(json.jwt)
-          
-        }
       })
       //Wait one second before redirect to the home page
       .then(() => {
@@ -79,12 +71,12 @@ const LoginForm= () =>  {
                 </div>
                 <div className="form__element">
                     <label className="form__label">Username&#58;</label>    
-                    <input className="form__input" onChange={event => setUsernameValue(event.target.value)} value={usernameValue.trim()} name="username" placeholder="Enter your username" ref={register} />
+                    <input className="form__input" name="username" placeholder="Enter your username" ref={register} />
                     {errors.username && <ErrorMessage>{errors.username.message}</ErrorMessage>}  
                 </div>
                 <div className="form__element">
                     <label className="form__label">Password&#58;</label>
-                    <input className="form__input" onChange={event => setPasswordValue(event.target.value)} value={passwordValue.trim()} name="password" placeholder="Enter a password of min 4 characters" ref={register} />
+                    <input className="form__input" name="password" placeholder="Enter a password of min 4 characters" ref={register} />
                     {errors.password && <ErrorMessage>{errors.password.message}</ErrorMessage>}
                 </div>
                 <div className="form__element">

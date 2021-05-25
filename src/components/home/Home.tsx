@@ -16,19 +16,19 @@ const articlesUrl = baseUrl + "books";
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch(articlesUrl)
-        .then(response => response.json())
-        .then(json => {
-            setBooks(json);
-            setFilteredBooks(json);
-            setLoading(false);
-           
-        })
-        .catch((error:any) => {
-            console.log(error)
-            setServerError(error);
-           
-        })
+        const getBooks = async ()=> {
+            try {
+                const response = await fetch(articlesUrl);
+                const json = await response.json();
+                setBooks(json);
+                setFilteredBooks(json);
+                setLoading(false);
+            } catch(error) {
+                console.log(error)
+                setServerError(error);
+            }
+        }
+        getBooks();
     }, []);
 
     const filterBooks = (e: any) => {
@@ -54,7 +54,7 @@ const articlesUrl = baseUrl + "books";
                 <section className="home__bookList">
                     <table className="home__table">
                         <TableHeading />
-                        <BookList filteredBooks={filteredBooks} />  
+                        <BookList books={filteredBooks} />  
                     </table>
                 </section>
             </div>

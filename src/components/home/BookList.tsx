@@ -1,23 +1,33 @@
-import { useContext} from 'react'; 
+import { useContext, useEffect} from 'react'; 
 import FavBtn from '../favourites/FavBtn';
 import { MdEdit } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
 import AuthContext from "../common/AuthContext";
 
 interface Props {
-    filteredBooks: any;
+    books: any;
 }
 
-const BookList:React.FC<Props> = ({filteredBooks}) => {
-    const [auth, setAuth] = useContext(AuthContext);
+const BookList:React.FC<Props> = ({books}) => {
+    const [auth, ] = useContext(AuthContext);
     const history = useHistory();
     const handleClick = (id: number) => {
         history.push(`/editBooks/${id}`)
    }
-   console.log(setAuth);
+
+   useEffect(() => {
+       if(books.length === 0) {
+           <tbody>
+               <tr>
+                   <td>Book list is empty</td>
+               </tr>
+           </tbody>
+       }
+   }, [books.length]);
+   
     return (
         <>
-            {filteredBooks.map((books: any) => {
+            {books.map((books: any) => {
                 const {id, title, description, genre, author} = books;
                
                     return(

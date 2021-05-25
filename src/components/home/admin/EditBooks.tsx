@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'; 
+import {  useEffect, useState } from 'react'; 
 import { useParams, useHistory } from 'react-router-dom'; 
 import {useForm } from 'react-hook-form';
 import * as yup from 'yup';
@@ -23,70 +23,65 @@ const schema = yup.object().shape({
 
 
 const EditBooks: React.FC = () => {
-	const [titleValue, setTitleValue] = useState("");
-    const [genreValue, setGenreValue] = useState("");
-    const [authorValue, setAuthorValue] = useState("");
-    const [descriptionValue, setDescriptionValue] = useState("");
+	const [inputValues, setInputValues] = useState({title: "", genre: "", description: "", author: ""})
     const [message, setMessage] = useState(false);
 	const [errorMsg, setErrorMsg] = useState(false);
-	const [currentId, setCurrentId] = useState("")
 	const {id}: any = useParams();
 	const history = useHistory();
-
-	const { register, handleSubmit, errors } = useForm({ 
-			  resolver: yupResolver(schema),
-		  });
+	
+	const { register, handleSubmit, errors, reset } = useForm({  
+		resolver: yupResolver(schema),
+		defaultValues: inputValues,
+		
+	});
 
 	useEffect(() => {
-		fetch(booksUrl + id)
-		.then(data => data.json())
-		.then(json => {
-			setTitleValue(json.title);
-			setGenreValue(json.genre);
-			setAuthorValue(json.author);
-			setDescriptionValue(json.description);
-			setCurrentId(json.id)
-		})
-	
+		const fetchData = async ()=> {
+			fetch(booksUrl + id)
+			.then(data => data.json())
+			.then(json => {
+				setInputValues(json);
+				//{title: json.title, genre: json.genre, description: json.description, author: json.author}
+				reset(json)
+			})
+		}
+		fetchData();
 		 // eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
-		
-		const editBook = async( title: string, genre: string, author: string, description: string) => {
- 
-			const data = JSON.stringify({title: title, genre: genre, author: author, description: description });
-		 	console.log(booksUrl + id)
-			fetch(booksUrl + id, {
-			  method: 'PUT',
-			  headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${token}`
-			  },
-			  body: data
-			})
-			  .then(data => data.json())
-		   }
 
-	const submitForm = () => {
-		editBook(titleValue, genreValue, authorValue, descriptionValue)
-		.then(()=> {
-				setMessage(true);
-				setErrorMsg(false);
-		})
-		//Wait one second before redirect to the home page
-      .then(() => {
-         setTimeout(()=> {
-            setMessage(false);
-            history.push("/");
-        }, 1000)
-      })
-		.catch((error: any) => {
-			console.log(error)
-			setMessage(false);
+	useEffect(() => {
+		console.log(inputValues);
+	  }, [inputValues, setInputValues]);
+
+	const submitForm = async (data: any) => {
+	try {
+		const response = await fetch(booksUrl + id, {
+			method: 'PUT',
+			body: JSON.stringify(data),
+			headers: {
+			  'Content-Type': 'application/json',
+			  Authorization: `Bearer ${token}`
+			}
+		  })
+		  const json = await response.json();
+		  if(json.updated_at) {
+			setMessage(true);
+			setErrorMsg(false);
+			setTimeout(()=> {
+				setMessage(false);
+				history.push("/");
+			}, 1000)
+		  } if(json.error) {
 			setErrorMsg(true);
-		})
+		  }
+	}catch(error) {
+		console.log(error)
+		setMessage(false);
+		setErrorMsg(true);
+	}
+	
 	};
  	
-
 	return ( 
 		<main>
 			<h1 className="title">Edit Books</h1>
@@ -97,22 +92,22 @@ const EditBooks: React.FC = () => {
 				</div>
 				<div className="form__element">
 					<label className="form__label">Title&#58;</label>    
-					<input className="form__input" onChange={event => setTitleValue(event.target.value)} value={titleValue.trim()} name="title" ref={register} />
+					<input className="form__input" name="title" ref={register} />
 					{errors.title && <ErrorMessage>{errors.title.message}</ErrorMessage>}
 				</div>
 				<div className="form__element">
 					<label className="form__label">Genre&#58;</label>
-					<input className="form__input" onChange={event => setGenreValue(event.target.value)} value={genreValue.trim()} name="genre" ref={register} />
+					<input className="form__input" name="genre" ref={register} />
 					{errors.genre && <ErrorMessage>{errors.genre.message}</ErrorMessage>}
 				</div>
 				<div className="form__element">
 					<label className="form__label">Author&#58;</label>
-					<input className="form__input" onChange={event => setAuthorValue(event.target.value)} value={authorValue} name="author" ref={register} />
+					<input className="form__input" name="author" ref={register} />
 					{errors.author && <ErrorMessage>{errors.author.message}</ErrorMessage>}
 				</div>
 				<div className="form__element">
 					<label className="form__label">Description&#58;</label>
-					<textarea className="form__description" onChange={event => setDescriptionValue(event.target.value)} value={descriptionValue} name="description" ref={register} />
+					<textarea className="form__description" name="description" ref={register} />
 					{errors.description && <ErrorMessage>{errors.description.message}</ErrorMessage>}
 				</div>
 				<div className="form__element">
@@ -124,8 +119,7 @@ const EditBooks: React.FC = () => {
 				</div>
 				<div className="form__element">
 					<label className="form__label"></label>
-					 <DeleteButton id={currentId} deleteBook={deleteBook} /> 
-					
+					<DeleteButton id={id} deleteBook={deleteBook} />  
 				</div>
 			</form> 	 
 		</main>

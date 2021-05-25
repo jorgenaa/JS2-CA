@@ -1,4 +1,4 @@
-export const tokenKey: string = "token";
+export const tokenKey: string = "jwt";
 export const userKey: string = "user";
 
 export function saveToken(token: string) {
