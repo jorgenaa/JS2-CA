@@ -15,16 +15,15 @@ const BookList:React.FC<Props> = ({books}) => {
         history.push(`/editBooks/${id}`)
    }
 
-   useEffect(() => {
-       if(books.length === 0) {
-           <tbody>
-               <tr>
-                   <td>Book list is empty</td>
-               </tr>
-           </tbody>
-       }
-   }, [books.length]);
-   
+   useEffect(() => {}, [books.length]);
+
+   if(books.length === 0) {
+        <tbody>
+            <tr>
+                <td>Book list is empty</td>
+            </tr>
+        </tbody>
+}
     return (
         <>
             {books.map((books: any) => {

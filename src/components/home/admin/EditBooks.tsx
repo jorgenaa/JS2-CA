@@ -41,17 +41,12 @@ const EditBooks: React.FC = () => {
 			.then(data => data.json())
 			.then(json => {
 				setInputValues(json);
-				//{title: json.title, genre: json.genre, description: json.description, author: json.author}
 				reset(json)
 			})
 		}
 		fetchData();
 		 // eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
-
-	useEffect(() => {
-		console.log(inputValues);
-	  }, [inputValues, setInputValues]);
 
 	const submitForm = async (data: any) => {
 	try {
@@ -79,7 +74,6 @@ const EditBooks: React.FC = () => {
 		setMessage(false);
 		setErrorMsg(true);
 	}
-	
 	};
  	
 	return ( 
